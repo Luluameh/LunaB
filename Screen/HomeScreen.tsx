@@ -14,6 +14,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import { useNavigation } from "expo-router";
 import { RootStackParamList, House as HouseType } from "../types"; // Import the type with an alias
+import { Fontisto, Ionicons } from "@expo/vector-icons";
 
 interface House {
   id: string;
@@ -251,7 +252,15 @@ const HomeScreen: React.FC = () => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.location}>LunaB</Text>
+        <View>
+          <Text>Location</Text>
+          <Text style={styles.location}>LunaB</Text>
+        </View>
+        <TouchableOpacity>
+          <Ionicons name="notifications-outline" size={24} color="black" />{" "}
+        </TouchableOpacity>
+      </View>
+      <View style={styles.header}>
         <View style={styles.headerRight}>
           <TextInput
             style={styles.searchInput}
@@ -259,10 +268,10 @@ const HomeScreen: React.FC = () => {
             value={searchQuery}
             onChangeText={(text) => setSearchQuery(text)}
           />
-          <TouchableOpacity style={styles.notificationIcon}>
-            <Text>🔔</Text>
-          </TouchableOpacity>
         </View>
+        <TouchableOpacity style={styles.notificationIcon}>
+          <Fontisto name="nav-icon-grid-a" size={24} color="white" />{" "}
+        </TouchableOpacity>
       </View>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {["All", "House", "Apartment", "Villa"].map((category) => (
@@ -294,17 +303,23 @@ const HomeScreen: React.FC = () => {
           renderItem={({ item }) => (
             <TouchableOpacity
               style={styles.listItem}
-              onPress={() =>
-                navigation.navigate("details/details", { house:item })
-              }
+              onPress={() => {
+                const selectedHouse = nearYouData.find(
+                  (item) => item.id === item.id
+                );
+                navigation.navigate("details/details", { house: item });
+              }}
             >
-              <Image
-                source={{ uri: item.image }}
-                style={styles.listItemImage}
-              />
-              <Text style={styles.listItemName}>{item.name}</Text>
-              <Text style={styles.listItemAddress}>{item.address}</Text>
-              <Text style={styles.listItemDistance}>{item.distance}</Text>
+              <View style={styles.imageContainer}>
+                <Image
+                  source={{ uri: item.image }}
+                  style={styles.listItemImage}
+                />
+
+                <Text style={styles.listItemName}>{item.name}</Text>
+                <Text style={styles.listItemAddress}>{item.address}</Text>
+                <Text style={styles.listItemDistance}>{item.distance}</Text>
+              </View>
             </TouchableOpacity>
           )}
           keyExtractor={(item) => item.id}
@@ -318,9 +333,9 @@ const HomeScreen: React.FC = () => {
           <TouchableOpacity
             key={item.id}
             style={styles.bestForYouItem}
-            onPress={() =>
-              navigation.navigate("details/details", { house: item })
-            }
+            onPress={() => {
+              navigation.navigate("details/details", { house: item });
+            }}
           >
             <Image
               source={{ uri: item.image }}
@@ -361,17 +376,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   searchInput: {
-    height: 40,
+    height: 48,
     borderColor: "#CCCCCC",
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 8,
     marginRight: 8,
-    width: 200,
+    width: 278,
   },
   notificationIcon: {
     padding: 8,
-    backgroundColor: "#CCCCCC",
+    backgroundColor: "red",
     borderRadius: 8,
   },
   categoryButton: {
@@ -382,6 +397,8 @@ const styles = StyleSheet.create({
   },
   selectedCategoryButton: {
     backgroundColor: "#000000",
+    display: "flex",
+    justifyContent: "space-between",
   },
   categoryText: {
     color: "#000000",
@@ -395,33 +412,46 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginBottom: 8,
   },
+  //for the near you section
+  imageContainer: {
+    position: "relative",
+  },
   listItem: {
     marginRight: 16,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "transparent",
     borderRadius: 8,
     overflow: "hidden",
   },
   listItemImage: {
-    width: 150,
-    height: 100,
+    width: 222,
+    height: 272,
   },
   listItemName: {
+    position: "absolute",
+    bottom: 60,
+    left: 8,
     fontSize: 16,
     fontWeight: "bold",
-    marginTop: 8,
-    marginHorizontal: 8,
+    color: "white",
   },
   listItemAddress: {
+    position: "absolute",
+    bottom: 40,
+    left: 8,
     fontSize: 14,
-    color: "#777777",
-    marginHorizontal: 8,
+    color: "#ffffff",
   },
   listItemDistance: {
+    position: "absolute",
+    top: 20,
+    right: 8,
     fontSize: 14,
-    color: "#777777",
-    marginHorizontal: 8,
-    marginBottom: 8,
+    color: "#ffffff",
+    backgroundColor: "red",
+    padding: 5,
+    borderRadius: 5,
   },
+  //best for you section
   bestForYouItem: {
     flexDirection: "row",
     marginBottom: 16,
@@ -430,8 +460,8 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   bestForYouImage: {
-    width: 100,
-    height: 100,
+    width: 74,
+    height: 70,
   },
   bestForYouDetails: {
     flex: 1,

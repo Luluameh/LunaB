@@ -12,6 +12,10 @@
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-, "Screen/HomeScreen.jsx", "app/Profile.jsx", "Screen/HouseDetails.jsx"  ]
+    "expo-env.d.ts",
+    "Screen/HomeScreen.jsx",
+    "app/Profile.jsx",
+    "Screen/HouseDetails.jsx",
+    "app/details/details.tsx"
+  ]
 }

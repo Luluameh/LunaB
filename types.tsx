@@ -13,5 +13,4 @@ export interface House {
 
 export type RootStackParamList = {
   "details/details": { house: House };
-  // Add other routes here if needed
 };

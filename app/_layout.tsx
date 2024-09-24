@@ -20,14 +20,14 @@ export default function Layout() {
           name="index"
           options={{
             drawerLabel: "Home",
-            title: "overview",
+            title: "overview ",
           }}
         />
 
         <Drawer.Screen
           name="details/details"
           options={{
-            drawerLabel: () => null, // Hide from drawer menu
+            drawerLabel: () => null,
             title: "Details",
           }}
         />

@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     marginBottom: 20,
-    resizeMode: "contain", // Adjust resizeMode based on your image aspect ratio
+    resizeMode: "contain", 
   },
   heading: {
     fontSize: 24,
